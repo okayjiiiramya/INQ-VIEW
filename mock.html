@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InQview - Mock Interview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: gilroy, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #111;
+            color: #fff;
+            font-size: 1vw;
+        }
+
+        /* Navbar Styling */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 12vh;
+            padding: 2vw 10.4vw;
+            background-color: #111;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        nav h1 {
+            font-size: 2.5vw;
+            font-weight: 600;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2vw;
+        }
+
+        nav .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1vw;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: #0BA34E;
+        }
+
+        /* Interview Section */
+        .interview-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10vw;
+        }
+
+        .interview-container {
+            background-color: #222;
+            width: 80%;
+            height: 80vh;
+            padding: 4vw;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .interview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2vh;
+        }
+
+        .interview-header h1 {
+            font-size: 3vw;
+            color: #0BA34E;
+        }
+
+        .interview-content {
+            display: flex;
+            flex-grow: 1;
+            gap: 2vw;
+        }
+
+        .question-panel {
+            flex: 1;
+            background-color: #333;
+            border-radius: 10px;
+            padding: 2vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .question-panel p {
+            font-size: 1.5vw;
+            text-align: center;
+            color: #ccc;
+        }
+
+        .video-panel {
+            flex: 1;
+            background-color: #333;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #videoFeed {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+        }
+
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2vw;
+            margin-top: 2vh;
+        }
+
+        .control-btn {
+            padding: 1vw 2vw;
+            background-color: #0BA34E;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2vw;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background-color: #09832f;
+        }
+
+        .control-btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+
+        #timerDisplay {
+            position: absolute;
+            top: 1vw;
+            right: 1vw;
+            background-color: rgba(0,0,0,0.5);
+            padding: 0.5vw 1vw;
+            border-radius: 5px;
+            font-size: 1.2vw;
+        }
+
+        #recordingStatus {
+            position: absolute;
+            top: 1vw;
+            left: 1vw;
+            background-color: red;
+            color: white;
+            padding: 0.5vw 1vw;
+            border-radius: 5px;
+            font-size: 1.2vw;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <h1>InQview</h1>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="casestudy.html">Case Studies</a>
+            <a href="connect.html">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Interview Section -->
+    <section class="interview-section">
+        <div class="interview-container">
+            <div class="interview-header">
+                <h1>Mock Interview</h1>
+                <div id="timerDisplay">00:00</div>
+            </div>
+            <div class="interview-content">
+                <div class="question-panel">
+                    <p id="currentQuestion">Press Start to begin your mock interview</p>
+                </div>
+                <div class="video-panel">
+                    <video id="videoFeed" autoplay muted></video>
+                    <div id="recordingStatus">Recording</div>
+                </div>
+            </div>
+            <div class="control-buttons">
+                <button id="startBtn" class="control-btn">Start Interview</button>
+                <button id="stopBtn" class="control-btn" disabled>Stop Interview</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Interview Questions
+        const interviewQuestions = [
+            "Tell me about yourself.",
+            "What are your greatest strengths?",
+            "What is your biggest professional challenge?",
+            "Where do you see yourself in five years?",
+            "Why do you want to work here?"
+        ];
+
+        // DOM Elements
+        const videoFeed = document.getElementById('videoFeed');
+        const currentQuestion = document.getElementById('currentQuestion');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const recordingStatus = document.getElementById('recordingStatus');
+
+        // Interview State Variables
+        let mediaRecorder;
+        let recordedChunks = [];
+        let questionIndex = 0;
+        let interviewTimer;
+        let seconds = 0;
+
+        // Start Interview Setup
+        async function setupInterview() {
+            try {
+                // Request camera and audio permissions
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: true, 
+                    audio: true 
+                });
+
+                videoFeed.srcObject = stream;
+
+                // Setup media recorder
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        recordedChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                    const videoURL = URL.createObjectURL(blob);
+                    
+                    // Optional: You could save or upload the recording here
+                    console.log('Interview recording completed');
+                    recordedChunks = [];
+                };
+
+                startBtn.disabled = false;
+            } catch (err) {
+                console.error('Error accessing media devices:', err);
+                alert('Please allow camera and microphone access to start the interview.');
+            }
+        }
+
+        // Start Recording
+        function startRecording() {
+            recordedChunks = [];
+            mediaRecorder.start();
+            recordingStatus.style.display = 'block';
+            
+            // Start Timer
+            seconds = 0;
+            interviewTimer = setInterval(() => {
+                seconds++;
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Stop Recording
+        function stopRecording() {
+            mediaRecorder.stop();
+            clearInterval(interviewTimer);
+            recordingStatus.style.display = 'none';
+        }
+
+        // Next Question
+        function nextQuestion() {
+            if (questionIndex < interviewQuestions.length) {
+                currentQuestion.textContent = interviewQuestions[questionIndex];
+                questionIndex++;
+            } else {
+                stopBtn.click();
+                currentQuestion.textContent = "Interview Completed! Thank you.";
+            }
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', () => {
+            startRecording();
+            nextQuestion();
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+        });
+
+        stopBtn.addEventListener('click', () => {
+            stopRecording();
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            currentQuestion.textContent = "Interview Stopped. Press Start to begin again.";
+            timerDisplay.textContent = '00:00';
+            questionIndex = 0;
+        });
+
+        // Initialize Interview
+        setupInterview();
+    </script>
+</body>
+</html>

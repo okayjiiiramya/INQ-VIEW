@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InQview - Job Market Case Studies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: gilroy, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #111;
+            color: #fff;
+            font-size: 1vw;
+        }
+
+        /* Navbar Styling */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 12vh;
+            padding: 2vw 10.4vw;
+            background-color: #111;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        nav h1 {
+            font-size: 2.5vw;
+            font-weight: 600;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2vw;
+        }
+
+        nav .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1vw;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: #0BA34E;
+        }
+
+        /* Case Studies Section */
+        .case-studies-section {
+            padding: 15vh 10vw;
+        }
+
+        .section-title {
+            font-size: 3vw;
+            text-align: center;
+            margin-bottom: 5vh;
+            color: #0BA34E;
+        }
+
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3vw;
+        }
+
+        .case-study-card {
+            background-color: #222;
+            border-radius: 15px;
+            padding: 2vw;
+            transition: transform 0.3s ease;
+        }
+
+        .case-study-card:hover {
+            transform: scale(1.05);
+        }
+
+        .case-study-card h3 {
+            font-size: 1.8vw;
+            color: #0BA34E;
+            margin-bottom: 1vh;
+        }
+
+        .case-study-card .date {
+            color: #ccc;
+            font-size: 1vw;
+            margin-bottom: 1vh;
+        }
+
+        .case-study-card p {
+            font-size: 1.2vw;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .case-study-card .tag {
+            display: inline-block;
+            background-color: #333;
+            color: #0BA34E;
+            padding: 0.5vw 1vw;
+            border-radius: 20px;
+            font-size: 1vw;
+            margin-top: 1vh;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <h1>InQview</h1>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="case-study.html">Case Studies</a>
+            <a href="connect.html">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Case Studies Section -->
+    <section class="case-studies-section">
+        <h1 class="section-title">Recent Job Market Insights</h1>
+        
+        <div class="case-studies-grid">
+            <!-- Case Study 1 -->
+            <div class="case-study-card">
+                <h3>Tech Industry Hiring Trends</h3>
+                <p class="date">June 2024</p>
+                <p>Explore the latest hiring trends in the technology sector, including emerging roles in AI, cybersecurity, and cloud computing.</p>
+                <span class="tag">Technology</span>
+            </div>
+
+            <!-- Case Study 2 -->
+            <div class="case-study-card">
+                <h3>Remote Work Impact on Recruitment</h3>
+                <p class="date">May 2024</p>
+                <p>Analysis of how remote and hybrid work models are transforming recruitment strategies and candidate expectations.</p>
+                <span class="tag">Workforce Dynamics</span>
+            </div>
+
+            <!-- Case Study 3 -->
+            <div class="case-study-card">
+                <h3>Green Jobs Market Expansion</h3>
+                <p class="date">April 2024</p>
+                <p>Insights into the growing job market in sustainable industries, renewable energy, and environmental technology.</p>
+                <span class="tag">Sustainability</span>
+            </div>
+
+            <!-- Case Study 4 -->
+            <div class="case-study-card">
+                <h3>AI and Automation Job Landscape</h3>
+                <p class="date">March 2024</p>
+                <p>Comprehensive overview of how AI and automation are creating new job roles and transforming existing career paths.</p>
+                <span class="tag">Artificial Intelligence</span>
+            </div>
+
+            <!-- Case Study 5 -->
+            <div class="case-study-card">
+                <h3>Healthcare Sector Employment</h3>
+                <p class="date">February 2024</p>
+                <p>Detailed report on employment trends, skill demands, and growth opportunities in the healthcare and medical technology sectors.</p>
+                <span class="tag">Healthcare</span>
+            </div>
+
+            <!-- Case Study 6 -->
+            <div class="case-study-card">
+                <h3>Startup Ecosystem Recruitment</h3>
+                <p class="date">January 2024</p>
+                <p>Exploring recruitment strategies, talent acquisition, and skill requirements in the fast-evolving startup ecosystem.</p>
+                <span class="tag">Startups</span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Optional: Add interactivity for case studies
+        const caseStudyCards = document.querySelectorAll('.case-study-card');
+        
+        caseStudyCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Potential future functionality like opening detailed case study
+                console.log('Case study clicked');
+            });
+        });
+    </script>
+</body>
+</html>
